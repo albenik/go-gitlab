@@ -63,6 +63,8 @@ const (
 	JobToken
 	OAuthToken
 	PrivateToken
+
+	KeysetPagination = "keyset"
 )
 
 // A Client manages communication with the GitLab API.
@@ -206,8 +208,16 @@ type Client struct {
 // ListOptions specifies the optional parameters to various List methods that
 // support pagination.
 type ListOptions struct {
+	// If set to `keyset`
+	// enables [keyset-based pagination](https://docs.gitlab.com/ee/api/index.html#keyset-based-pagination)
+	Pagination string `url:"pagination,omitempty" json:"pagination,omitempty"`
+
 	// For paginated result sets, page of results to retrieve.
+	// DEPRECATED: See [Keyset-based pagination](https://docs.gitlab.com/ee/api/index.html#keyset-based-pagination)
 	Page int `url:"page,omitempty" json:"page,omitempty"`
+
+	// Token to retrieve a page of the paginated result in keyset-based pagination manner.
+	PageToken string `url:"page_token,omitempty" json:"page_token,omitempty"`
 
 	// For paginated result sets, the number of results to include per page.
 	PerPage int `url:"per_page,omitempty" json:"per_page,omitempty"`
